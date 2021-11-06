@@ -20,3 +20,11 @@ hint: search in the device tree like for 'leds' and access the devices (led0, le
 device tree with bindings are compiled into devicetree_unfixed.h collectis all properties for each device
 
 find the bindings /home/osboxes/Docume…/zephyr/dts/bindings/gpio
+
+
+
+The RTT J-Link Viewer is needed to see the output of the rtt example from the thingy52_nrf52832
+
+
+
+###############################

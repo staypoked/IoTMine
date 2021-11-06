@@ -1,10 +1,11 @@
 #include <zephyr.h>
 
 int main() {
-	printk("Starting system.\n");
+	// Additionally install the rtt j-link viewer of jegger to see the output
+	printk("Welcome, starting system.\n");
 
 	while(true){
-		printk("Test.\n");
+		printk("Thingy52 is running.\n");
 		k_msleep(500);
 	}
 }
