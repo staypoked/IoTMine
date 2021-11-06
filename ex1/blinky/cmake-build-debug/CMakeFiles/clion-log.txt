@@ -1,0 +1,16 @@
+/snap/clion/169/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/osboxes/Documents/IoT/ex1/blinky
+Including boilerplate (Freestanding): /home/osboxes/zephyrproject/zephyr/cmake/app/boilerplate.cmake
+-- Application: /home/osboxes/Documents/IoT/ex1/blinky
+-- Zephyr version: 2.7.99 (/home/osboxes/zephyrproject/zephyr), build: v2.7.99-1106-g612409d39d86
+-- Found Python3: /usr/bin/python3.8 (found suitable exact version "3.8.10") found components: Interpreter 
+CMake Error at /home/osboxes/zephyrproject/zephyr/cmake/extensions.cmake:2413 (message):
+  BOARD is not being defined on the CMake command-line in the environment or
+  by the app.
+Call Stack (most recent call first):
+  /home/osboxes/zephyrproject/zephyr/cmake/app/boilerplate.cmake:212 (zephyr_check_cache)
+  /home/osboxes/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:24 (include)
+  /home/osboxes/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:102 (include_boilerplate)
+  CMakeLists.txt:4 (find_package)
+
+
+-- Configuring incomplete, errors occurred!

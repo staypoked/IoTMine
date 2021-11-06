@@ -1,0 +1,22 @@
+# source the west environment
+source ~/zephyrproject/.venv/bin/activate
+ 
+# default zephyr examples are in
+cd ~/zephyrproject/zephyr/samples/basic/blinky
+ 
+# build a prj.conf file
+west build -p auto -b thingy52_nrf52832 .
+
+# flash to board
+west flash
+
+
+
+###############################
+zephyr.dts file is the devicetree: Alias definition and so on; soc part where all the devices are listed
+
+hint: search in the device tree like for 'leds' and access the devices (led0, led1, led2)
+
+device tree with bindings are compiled into devicetree_unfixed.h collectis all properties for each device
+
+find the bindings /home/osboxes/Docume…/zephyr/dts/bindings/gpio
