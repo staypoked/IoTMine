@@ -26,5 +26,13 @@ find the bindings /home/osboxes/Docume…/zephyr/dts/bindings/gpio
 The RTT J-Link Viewer is needed to see the output of the rtt example from the thingy52_nrf52832
 
 
+Use DT_PATH() to specify the hierarchy of the yaml file you are using
+
+Find additional information regarding the sensors in the driver: For all sensors first fetch and then sample otherwise you will not get new values.
 
 ###############################
+
+
+############### EX 1 ###############
+
+HTS221 and AMG88XX example for the trigger with threshold are really helpful
