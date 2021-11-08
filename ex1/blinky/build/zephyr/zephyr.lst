@@ -386,6 +386,7 @@ void main(void)
      412:	2201      	movs	r2, #1
      414:	2107      	movs	r1, #7
      416:	4630      	mov	r0, r6
+                        // do not forget to set the other pins back to false
                         gpio_pin_set(green_led_device, PIN1, false);
                         gpio_pin_set(blue_led_device, PIN2, false);
                 } else if (state == 1) {

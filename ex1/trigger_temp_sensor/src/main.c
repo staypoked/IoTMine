@@ -44,6 +44,7 @@ void main() {
   //const struct device* sensor_device = DEVICE_DT_GET(MY_TEMPERATURE);
   //const struct device* sensor_device = device_get_binding("HTS221");
   const struct device* sensor_device = device_get_binding(DT_LABEL(MY_TEMPERATURE));
+    
 #else
 #error "Node is disabled"
 #endif
@@ -70,18 +71,11 @@ void main() {
 	};
 
   if (IS_ENABLED(CONFIG_HTS221_TRIGGER)){
-    printk("HTS221 trigger is enabled and will be set to specified upper threshold.");
-
-    int ret = sensor_attr_set(sensor_device, SENSOR_CHAN_AMBIENT_TEMP,
-            SENSOR_ATTR_UPPER_THRESH, &attr);
-            
-    if (ret < 0) {
-      printk("Could not set threshold ass error occured:\"%d\" \n", ret);
-      return;
-    }
-
+    printk("HTS221 trigger is enabled and will be set to specified upper threshold.\n");
+    
     struct sensor_trigger trig = {
-      .type = SENSOR_TRIG_THRESHOLD,
+      //.type = SENSOR_TRIG_THRESHOLD,
+      .type = SENSOR_TRIG_DATA_READY,
       .chan = SENSOR_CHAN_AMBIENT_TEMP,
     };
 
@@ -89,9 +83,18 @@ void main() {
       printk("Could not set trigger\n");
       return;
     }
+
+    int ret = sensor_attr_set(sensor_device, SENSOR_CHAN_AMBIENT_TEMP,
+            SENSOR_ATTR_UPPER_THRESH, &attr);
+            
+    if (ret < 0) {
+      printk("Could not set threshold as error occured:\"%d\" \n", ret);
+      return;
+    }
+
   }
 
-  printk("Trigger set with upper threshold of: \"%d\".\"%d\" ", attr.val1, attr.val2);
+  printk("Trigger set with upper threshold of: \"%d\".\"%d\" \n", attr.val1, attr.val2);
   
   while(true) {
     get_sample(sensor_device);
