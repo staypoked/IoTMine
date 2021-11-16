@@ -304,10 +304,11 @@ Disassembly of section text:
 
 int main() {
      3b8:	b508      	push	{r3, lr}
-	// Additionally install the rtt viewer of jegger to see the output
+	// Additionally install the rtt j-link viewer of jegger to see the output
 	printk("Welcome, starting system.\n");
      3ba:	4806      	ldr	r0, [pc, #24]	; (3d4 <main+0x1c>)
 
+	// CONFIG_USE_SEGGER_RTT has to be enabled in the prj.conf file to be useable on the thingy 52
 	while(true){
 		printk("Thingy52 is running.\n");
      3bc:	4c06      	ldr	r4, [pc, #24]	; (3d8 <main+0x20>)
@@ -323,7 +324,7 @@ int main() {
 	compiler_barrier();
 	return z_impl_k_sleep(timeout);
      3c8:	2100      	movs	r1, #0
-     3ca:	f44f 4080 	mov.w	r0, #16384	; 0x4000
+     3ca:	f44f 4000 	mov.w	r0, #32768	; 0x8000
      3ce:	f003 fcab 	bl	3d28 <z_impl_k_sleep>
      3d2:	e7f6      	b.n	3c2 <main+0xa>
      3d4:	000057c8 	.word	0x000057c8

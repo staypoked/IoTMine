@@ -927,8 +927,8 @@ Disassembly of section text:
 	...
 
 00000b58 <main>:
-// Important: Lowercase, convert @ to _ and - to _
-// gas sensor node path
+* Additionally for a specific parent or child node DT_PARENT() or DT_CHILD() can be used
+*/
 #define MY_GAS DT_PATH(soc, i2c_40003000, ccs811_5a)
 #define MY_GAS_LABEL DT_NODELABEL(ccs811)
 
@@ -948,7 +948,7 @@ void main() {
 	return z_impl_device_get_binding(name);
      b64:	4863      	ldr	r0, [pc, #396]	; (cf4 <main+0x19c>)
      b66:	f003 fc41 	bl	43ec <z_impl_device_get_binding>
-  const struct device* sensor_device = device_get_binding(DT_LABEL(MY_GAS));
+  //const struct device* sensor_device = device_get_binding(DT_LABEL(DT_INST(0, ams_ccs811)));
 #else
 #error "Node is disabled"
 #endif

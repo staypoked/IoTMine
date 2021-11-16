@@ -323,7 +323,7 @@ void main(void)
      3cc:	f002 fea2 	bl	3114 <z_impl_device_get_binding>
      3d0:	4607      	mov	r7, r0
 
-        // get binding for the led device based on the device tree label
+        // get binding for the led devices based on the device tree label
 	red_led_device = device_get_binding(LED0);
         green_led_device = device_get_binding(LED1);
         blue_led_device = device_get_binding(LED2);
@@ -375,11 +375,11 @@ void main(void)
      40c:	db2a      	blt.n	464 <CONFIG_MAIN_STACK_SIZE+0x64>
         int state = 0; 
      40e:	2400      	movs	r4, #0
-        // make them blink periodically
+        /* 
+        * After setting everything up, I make them blink periodically
+        * I introduced three states that periodically jump to the next after a specific delay
+        */
 	while (1) {
-		// gpio_pin_set(red_led_device, PIN, (int)led_red);
-                // gpio_pin_set(green_led_device, PIN1, 1-(int)led_red);
-                // led_red = !led_red;
 		if (state == 0){
      410:	b9c4      	cbnz	r4, 444 <CONFIG_MAIN_STACK_SIZE+0x44>
                         gpio_pin_set(red_led_device, PIN, true);

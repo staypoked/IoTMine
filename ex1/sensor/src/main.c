@@ -4,6 +4,7 @@
 #include <devicetree.h>
 
 // Important: Lowercase, convert @ to _ and - to _
+// search and get the specific sensor for the temp: hts221
 #define MY_TEMPERATURE DT_PATH(soc, i2c_40003000, hts221_5f)
 #define MY_TEMPERATURE_LABEL DT_NODELABEL(hts221)
 
@@ -14,9 +15,8 @@ void main() {
 #error "The node does not exist, something is wrong!"
 #endif
 
+// bind the device from the DT
 #if DT_NODE_HAS_STATUS(MY_TEMPERATURE, okay)
-  //const struct device* sensor_device = DEVICE_DT_GET(MY_TEMPERATURE);
-  //const struct device* sensor_device = device_get_binding("HTS221");
   const struct device* sensor_device = device_get_binding(DT_LABEL(MY_TEMPERATURE));
 #else
 #error "Node is disabled"
@@ -40,6 +40,7 @@ void main() {
   struct sensor_value temp_value;
   int err;
   while(true) {
+    // first sample fetch from the channel and the use sensor_channel_get to the get temp_value
     err = sensor_sample_fetch_chan(sensor_device, SENSOR_CHAN_AMBIENT_TEMP);
     if(err){
       printk("Error when sampling sensor (err: %d)", err);
@@ -51,6 +52,7 @@ void main() {
       printk("Error obtaining sensor value (err: %d)", err);
     }
 
+    // get the value periodically with k_msleep
     printk("Temperature: %f \n",  sensor_value_to_double(&temp_value));
     k_msleep(1000);
   }

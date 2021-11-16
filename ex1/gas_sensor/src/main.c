@@ -5,6 +5,12 @@
 
 // Important: Lowercase, convert @ to _ and - to _
 // gas sensor node path
+// check that the path in the DT is correct for the binding
+/*
+* INVESTIGATE WAYS OF ACCESSING DEVICES IN THE DEVICETREE (DT)
+* There are different node identifiers to refer to the DT: DT_NODELABEL(), DT_PATH(), DT_ALIAS(), DT_INST()
+* Additionally for a specific parent or child node DT_PARENT() or DT_CHILD() can be used
+*/
 #define MY_GAS DT_PATH(soc, i2c_40003000, ccs811_5a)
 #define MY_GAS_LABEL DT_NODELABEL(ccs811)
 
@@ -16,9 +22,9 @@ void main() {
 #endif
 
 #if DT_NODE_HAS_STATUS(MY_GAS, okay)
-  //const struct device* sensor_device = DEVICE_DT_GET(MY_TEMPERATURE);
-  //const struct device* sensor_device = device_get_binding("HTS221");
   const struct device* sensor_device = device_get_binding(DT_LABEL(MY_GAS));
+  // As alternative approach I tested with DT_INST() as described above
+  //const struct device* sensor_device = device_get_binding(DT_LABEL(DT_INST(0, ams_ccs811)));
 #else
 #error "Node is disabled"
 #endif
@@ -40,15 +46,18 @@ void main() {
 
   printk("Found device \"%s\", getting sensor data\n", sensor_device->name);
 
+  // Create value structs for all 4 values that can be retrieved from the gas sensor
   struct sensor_value co2, tvoc, voltage, current;
   int err, err_co2, err_tvoc, err_voltage, err_current;
   while(true) {
 
+    // first fetch from the gas sensor 
     err = sensor_sample_fetch(sensor_device);
     if(err){
         printk("Error when sampling gas sensor (err: %d)", err);
     }
 
+    // Get all 4 values from the channels of the gas sensor and check if an error occured
     err_co2 = sensor_channel_get(sensor_device, SENSOR_CHAN_CO2, &co2);
     if(err_co2){
       printk("Error obtaining co2 value (err: %d)", err);
@@ -66,17 +75,13 @@ void main() {
       printk("Error obtaining current value (err: %d)", err);
     }
 
+    // Print the values and do everything periodically with the specified delay
     printk("Fetched new values after 1 sec: \n");
     printk("CO2: %f \n",  sensor_value_to_double(&co2));
     printk("TVOC: %f \n",  sensor_value_to_double(&tvoc));
     printk("Voltage: %f \n",  sensor_value_to_double(&voltage));
     printk("Current: %f \n",  sensor_value_to_double(&current));
     printk("\n");
-
-		// printk("\n[%s]: CCS811: %u ppm eCO2; %u ppb eTVOC\n",
-		//        now_str(), co2.val1, tvoc.val1);
-		// printk("Voltage: %d.%06dV; Current: %d.%06dA\n", voltage.val1,
-		//        voltage.val2, current.val1, current.val2);
 
     k_msleep(1000);
   }

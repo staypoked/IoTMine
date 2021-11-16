@@ -7,14 +7,14 @@
 #define MY_TEMPERATURE DT_PATH(soc, i2c_40003000, hts221_5f)
 #define MY_TEMPERATURE_LABEL DT_NODELABEL(hts221)
 
+// Trigger implementation that will we executed when the trigger of the sensor fires
 static void trigger_handler(const struct device *dev,
 			    const struct sensor_trigger *trigger)
 {
-	//ARG_UNUSED(dev);
-	//ARG_UNUSED(trigger);
   printk("The room is getting to hot, please cool down.");
 }
 
+// This function just sample_fetch and then get the temperature value from channel SENSOR_CHAN_AMBIENT_TEMP
 static void get_sample(const struct device *dev){
   struct sensor_value temp_value;
   int err;
@@ -32,6 +32,7 @@ static void get_sample(const struct device *dev){
 
   printk("Temperature: %f \n",  sensor_value_to_double(&temp_value));
 }
+
 
 void main() {
   printk("Starting main.\n");
@@ -65,14 +66,17 @@ void main() {
   printk("Found device \"%s\", getting sensor data\n", sensor_device->name);
 
   // set threshold where val1 is before the decimal and val2 is after the decimal
-  struct sensor_value attr = {
-		.val1 = 27,
-		.val2 = 0,
-	};
+  // struct sensor_value attr = {
+	// 	.val1 = 27,
+	// 	.val2 = 0,
+	// };
+  //printk("Trigger will be set with upper threshold of: \"%d\".\"%d\" \n", attr.val1, attr.val2);
 
+  // check if the trigger is enabled (in prj.conf)
   if (IS_ENABLED(CONFIG_HTS221_TRIGGER)){
     printk("HTS221 trigger is enabled and will be set to specified upper threshold.\n");
     
+    // As discussed in the TUWEL chat I set the trigger for data ready and the temp channel
     struct sensor_trigger trig = {
       //.type = SENSOR_TRIG_THRESHOLD,
       .type = SENSOR_TRIG_DATA_READY,
@@ -83,20 +87,19 @@ void main() {
       printk("Could not set trigger\n");
       return;
     }
-
-    int ret = sensor_attr_set(sensor_device, SENSOR_CHAN_AMBIENT_TEMP,
-            SENSOR_ATTR_UPPER_THRESH, &attr);
+    // as the function is not working for that sensor, we decided to just use the trigger
+    // int ret = sensor_attr_set(sensor_device, SENSOR_CHAN_AMBIENT_TEMP,
+    //         SENSOR_ATTR_UPPER_THRESH, &attr);
             
-    if (ret < 0) {
-      printk("Could not set threshold as error occured:\"%d\" \n", ret);
-      return;
-    }
-
+    // if (ret < 0) {
+    //   printk("Could not set threshold as error occured:\"%d\" \n", ret);
+    //   return;
+    // }
   }
 
-  printk("Trigger set with upper threshold of: \"%d\".\"%d\" \n", attr.val1, attr.val2);
-  
   while(true) {
+    // get samples periodically all the time and just interrupt when the trigger fires
+    // actually with the trigger type is SENSOR_TRIG_DATA_READY it fires every time the data is ready
     get_sample(sensor_device);
     k_msleep(1000);
   }

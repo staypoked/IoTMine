@@ -927,8 +927,8 @@ Disassembly of section text:
 	...
 
 00000b58 <main>:
-
 // Important: Lowercase, convert @ to _ and - to _
+// search and get the specific sensor for the temp: hts221
 #define MY_TEMPERATURE DT_PATH(soc, i2c_40003000, hts221_5f)
 #define MY_TEMPERATURE_LABEL DT_NODELABEL(hts221)
 

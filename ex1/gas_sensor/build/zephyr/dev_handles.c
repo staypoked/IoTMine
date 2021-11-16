@@ -50,7 +50,7 @@ __devicehdl_DT_N_S_soc_S_i2c_40003000[] = { DEVICE_HANDLE_ENDS, DEVICE_HANDLE_EN
  * - /soc/i2c@40003000
  */
 const device_handle_t __aligned(2) __attribute__((__section__(".__device_handles_pass2")))
-__devicehdl_DT_N_S_soc_S_i2c_40003000_S_sx1509b_3e[] = { 13, 7, DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS };
+__devicehdl_DT_N_S_soc_S_i2c_40003000_S_sx1509b_3e[] = { 7, 13, DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS };
 
 /* 9 : /ccs-pwr-ctrl:
  * - (/)
@@ -99,7 +99,7 @@ __devicehdl_ccs_vdd_pwr_ctrl_init[] = { DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS }
  * - /soc/i2c@40003000/sx1509b@3e
  */
 const device_handle_t __aligned(2) __attribute__((__section__(".__device_handles_pass2")))
-__devicehdl_DT_N_S_soc_S_i2c_40003000_S_ccs811_5a[] = { 4, 9, 8, 7, DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS };
+__devicehdl_DT_N_S_soc_S_i2c_40003000_S_ccs811_5a[] = { 7, 4, 9, 8, DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS };
 
 /* 16 : /soc/i2c@40003000/hts221@5f:
  * - /vdd-pwr-ctrl
@@ -107,4 +107,4 @@ __devicehdl_DT_N_S_soc_S_i2c_40003000_S_ccs811_5a[] = { 4, 9, 8, 7, DEVICE_HANDL
  * - /soc/i2c@40003000
  */
 const device_handle_t __aligned(2) __attribute__((__section__(".__device_handles_pass2")))
-__devicehdl_DT_N_S_soc_S_i2c_40003000_S_hts221_5f[] = { 13, 4, 7, DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS };
+__devicehdl_DT_N_S_soc_S_i2c_40003000_S_hts221_5f[] = { 7, 13, 4, DEVICE_HANDLE_ENDS, DEVICE_HANDLE_ENDS };

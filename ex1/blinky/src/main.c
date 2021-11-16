@@ -9,6 +9,10 @@
 // get a handle on the device-node with the name led0 in the devicetree
 // more information on how to access the device tree from C is available at
 // https://docs.zephyrproject.org/latest/guides/dts/api-usage.html
+/*
+* EXTENDED EXAMPLE FOR ALL 3 LEDS
+* just set the additional pins and flags for the other colors
+*/
 #define LED_NODE DT_ALIAS(led0)
 #define LED_GREEN_NODE DT_NODELABEL(led1)
 // extended to use all three colors
@@ -69,14 +73,12 @@ void main(void)
 	const struct device *red_led_device;
         const struct device *green_led_device;
         const struct device *blue_led_device;
-        // flag to memorize the state of the led
-	//bool led_red = true;
         // store potential error values
 	int ret;
         // set specific state for each color (RED is 0, GREEN is 1 and BLUE is 2)
         int state = 0; 
 
-        // get binding for the led device based on the device tree label
+        // get binding for the led devices based on the device tree label
 	red_led_device = device_get_binding(LED0);
         green_led_device = device_get_binding(LED1);
         blue_led_device = device_get_binding(LED2);
@@ -108,12 +110,11 @@ void main(void)
           return;
         }
 
-        // After setting everything up, I 
-        // make them blink periodically
+        /* 
+        * After setting everything up, I make them blink periodically
+        * I introduced three states that periodically jump to the next after a specific delay
+        */
 	while (1) {
-		// gpio_pin_set(red_led_device, PIN, (int)led_red);
-                // gpio_pin_set(green_led_device, PIN1, 1-(int)led_red);
-                // led_red = !led_red;
 		if (state == 0){
                         gpio_pin_set(red_led_device, PIN, true);
                         // do not forget to set the other pins back to false
